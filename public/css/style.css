@@ -19,3 +19,14 @@
 .inline-it{
 	display: inline-block !important;
 }
+
+.reply{
+	margin:0 5px;
+	border-radius: 10px;
+	border-width: 1px;
+}
+
+.comment-form{
+	margin-top: 3px;
+	margin-bottom: 1px;
+}

@@ -23,12 +23,19 @@ class CommentController extends Controller
         // $thread->user->notify(new RepliedToThread($thread));
         return back()->withMessage('comment created');
     }
+
     public function addReplyComment(Request $request, Comment $comment)
     {
         $this->validate($request, [
             'body' => 'required',
         ]);
-        $comment->addComment($request->body);
+
+        $reply = new Comment();
+        $reply->body = $request->body;
+        $reply->user_id = auth()->user()->id;
+
+        $comment->comments()->save($reply);
+        // $comment->addComment($request->body);
         return back()->withMessage('Reply created');
     }
 
@@ -41,7 +48,17 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        if ($comment->user_id !== auth()->user()->id) {
+            abort('401');
+        }
+
+        $this->validate($request, [
+            'body' => 'required',
+        ]);
+
+        $comment->update($request->all());
+
+        return back()->withMessage('Updated');
     }
 
     /**
@@ -52,6 +69,11 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        if ($comment->user_id !== auth()->user()->id) {
+            abort('401');
+        }
+
+        $comment->delete();
+        return back()->withMessage('Deleted');
     }
 }

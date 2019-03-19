@@ -23,3 +23,4 @@ Route::resource('/threads', 'ThreadController');
 Route::resource('/comments', 'CommentController', ['only' => ['update', 'destroy']]);
 
 Route::post('comment/create/{thread}', 'CommentController@addThreadComment')->name('threadcomment.store');
+Route::post('reply/create/{comment}', 'CommentController@addReplyComment')->name('replycomment.store');

@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    protected $guarded = ['subject', 'type', 'thread', 'user_id'];
+    protected $fillable = ['subject', 'thread', 'user_id'];
 
     public function user()
     {
-        return $this->belangsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function comment()
+    public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
