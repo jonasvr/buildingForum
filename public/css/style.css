@@ -1,0 +1,21 @@
+.page-header{
+	padding-bottom: 2px;
+	margin-top: 25px;
+	margin-bottom: 2px;
+}
+
+.content-heading{
+	margin-left: 10px;
+}
+
+.main-content-heading{
+	padding: 0 30px;
+}
+
+.main-wrap{
+	padding-left: 20px;
+}
+
+.inline-it{
+	display: inline-block !important;
+}
