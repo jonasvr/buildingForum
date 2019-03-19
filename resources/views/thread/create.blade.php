@@ -8,7 +8,7 @@
         {{csrf_field()}}
         <div class="form-group">
             <label for="subject">Subject</label>
-            <input type="text" class="form-control border-0" name="subject" id="" placeholder="Input..." value="{{old('subject')}}" >
+            <input type="text" class="form-control border-0" name="subject" id="" placeholder="thread title" value="{{old('subject')}}" >
         </div>
         {{-- <div class="form-group">
             <label for="tag">Tags</label>
@@ -21,24 +21,22 @@
         </div> --}}
         <div class="form-group">
             <label for="thread">Thread</label>
-            <textarea class="form-control border-0" name="thread" id="" placeholder="Input..." value="">{{old('thread')}}</textarea>
+            <textarea class="form-control border-0 markUp" name="thread" id="" placeholder="thread content..." rows="15">{{old('thread')}}</textarea>
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <textarea class="form-control border-0" name="type" id="" placeholder="Input..." value="">{{old('type')}}</textarea>
+            <textarea class="form-control border-0" name="type" id="" placeholder="tag">{{old('type')}}</textarea>
         </div>
-        {{--  <div class="form-group">
-            {!! app('captcha')->display() !!}
-        </div>  --}}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 @endsection
-{{-- @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+@section('js')
+<script>tinymce.init({ selector:'.markUp',menubar:false });</script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
 <script>
 $(function () {
 $('#tag').selectize();
 })
-</script>
-@endsection --}}
+</script> --}}
+@endsection

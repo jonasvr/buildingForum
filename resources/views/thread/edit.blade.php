@@ -9,17 +9,20 @@
         {{method_field('put')}}
         <div class="form-group">
             <label for="subject">Subject</label>
-            <input type="text" class="form-control border-0" name="subject" id="" placeholder="Input..." value="{{$thread->subject}}" >
+            <input type="text" class="form-control border-0" name="subject" value="{{$thread->subject}}" >
         </div>
         <div class="form-group">
             <label for="thread">Thread</label>
-            <textarea class="form-control border-0" name="thread" id="" placeholder="Input...">{{$thread->thread}}</textarea>
+            <textarea class="form-control border-0 markUp" name="thread" rows="15">{{$thread->thread}}</textarea>
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <textarea class="form-control border-0" name="type" id="" placeholder="Input...">{{$thread->type}}</textarea>
+            <textarea class="form-control border-0" name="type">{{$thread->type}}</textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+@endsection
+@section('js')
+        <script>tinymce.init({ selector:'.markUp',menubar:false });</script>
 @endsection

@@ -29,6 +29,7 @@
 		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<script src="script/less-1.3.3.min.js"></script>
+		<script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=cwom5ca4igirexlgjx35h09rg0x2v7iigh2an6ggydkm3kb8"></script>
+		@yield('js')
 	</body>
 </html>
