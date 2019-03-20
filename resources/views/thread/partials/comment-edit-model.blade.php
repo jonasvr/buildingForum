@@ -17,7 +17,7 @@
                             <input type="text" class="form-control" name="body" id=""
                             autocomplete="off" value="{{$comment->body}}">
                         </div>
-                        <button type="submit" class="btn btn-primary">edit</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
                     </form>
                 </div>
             </div>

@@ -18,9 +18,7 @@
 					<div class="page-header">
 						<h4>@yield('heading')</h4>
 					</div>
-					<div class="card bg-light">
-						@yield('content')
-					</div>
+					@yield('content')
 				</div>
 			</div>
 		</div>

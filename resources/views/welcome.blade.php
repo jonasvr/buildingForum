@@ -14,5 +14,7 @@
 @endsection
 @section('heading','Threads')
 @section('content')
+<div class="card bg-light">
 	@include('thread.partials.thread-list')
+</div>
 @endsection

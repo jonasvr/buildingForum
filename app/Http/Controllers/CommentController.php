@@ -14,12 +14,12 @@ class CommentController extends Controller
         $this->validate($request, [
             'body' => 'required',
         ]);
-        $comment = new Comment();
-        $comment->body = $request->body;
-        $comment->user_id = auth()->user()->id;
-        //
-        $thread->comments()->save($comment);
-        // $thread->addComment($request->body);
+        // $comment = new Comment();
+        // $comment->body = $request->body;
+        // $comment->user_id = auth()->user()->id;
+        // //
+        // $thread->comments()->save($comment);
+        $thread->addComment($request->body);
         // $thread->user->notify(new RepliedToThread($thread));
         return back()->withMessage('comment created');
     }
@@ -30,12 +30,12 @@ class CommentController extends Controller
             'body' => 'required',
         ]);
 
-        $reply = new Comment();
-        $reply->body = $request->body;
-        $reply->user_id = auth()->user()->id;
+        // $reply = new Comment();
+        // $reply->body = $request->body;
+        // $reply->user_id = auth()->user()->id;
 
-        $comment->comments()->save($reply);
-        // $comment->addComment($request->body);
+        // $comment->comments()->save($reply);
+        $comment->addComment($request->body);
         return back()->withMessage('Reply created');
     }
 
