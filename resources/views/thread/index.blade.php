@@ -1,4 +1,7 @@
 @extends('layouts.front')
+@section('extraInfo')
+@include('thread.partials.threadTopicList')
+@endsection
 @section('heading')
 Threads
 @endsection

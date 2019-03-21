@@ -12,7 +12,6 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
-					@include('thread.partials.threadTopicList')
 					@yield('extraInfo')
 				</div>
 				<div class="col-md-9">

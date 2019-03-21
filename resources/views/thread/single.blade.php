@@ -1,44 +1,50 @@
 @extends('layouts.front')
 @section('heading','Thread')
 @section('extraInfo')
+@include('thread.partials.threadTopicList')
 @include('thread.partials.legend')
 @endsection
 @section('content')
-<div class="card border-light bg-secondary text-white">
-    <div class="card-body">
-        @include('layouts.partials.success')
+<div class="card border-light ">
+    @include('layouts.partials.success')
+    <div class="card-header bg-info text-white">
         <div class="row">
             <div class="h4 col-md-6">{{$thread->subject}}</div>
-            <div class="h5 text-right col-md-6"> {{$thread->user->name}}</div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="thread-details col-md-12">
-                {!!$thread->thread!!}
-            </div>
-            <br>
-            @can('update',$thread)
-            <div class="col-md-3 mt-3">
-                <div class="actions">
-                    <a href="{{route('threads.edit',$thread->id)}}" class="btn btn-xs btn-info btn-xs fas fa-xs fa-pen"></a>
-                    {{--//delete form--}}
-                    <form action="{{route('threads.destroy',$thread->id)}}" method="POST" class="inline-it">
-                        {{csrf_field()}}
-                        {{method_field('DELETE')}}
-                        <button class="btn btn-xs btn-danger fas fa-xs fa-trash" type="submit"></button>
-                    </form>
-                </div>
-            </div>
-            @endcan
+            {{-- <div class="h5 text-right col-md-6">
+                <a class="text-primary" href="{{ route('user_profile', $thread->user->name) }}">
+                    {{$thread->user->name}}
+                </a>
+            </div> --}}
         </div>
     </div>
+    <div class="card-body">
+    <div class="row">
+        <div class="thread-details col-md-12">
+           <p>{{str_limit($thread->thread,100) }}
+                    </p>
+
+        </div>
+        <div class="col-md-12 mt-3 text-sm">
+            <hr>
+                    Posted by <a href="{{route('user_profile',$thread->user->name)}}">{{$thread->user->name}}</a> {{$thread->created_at->diffForHumans()}}
+        @can('update',$thread)
+        <br>
+            <div class="actions">
+                <a href="{{route('threads.edit',$thread->id)}}" class="btn btn-xs btn-info btn-xs fas fa-xs fa-pen"></a>
+                {{--//delete form--}}
+                <form action="{{route('threads.destroy',$thread->id)}}" method="POST" class="inline-it">
+                    {{csrf_field()}}
+                    {{method_field('DELETE')}}
+                    <button class="btn btn-xs btn-danger fas fa-xs fa-trash" type="submit"></button>
+                </form>
+            </div>
+        @endcan
+        </div>
+    </div>
+    </div>
 </div>
-
-
 {{-- Awnser/comment --}}
 @include('thread.partials.comment-list')
-
-
 <div class="card border-light bg-light mt-3">
     <div class="card-body">
         <div class="comment-form">
