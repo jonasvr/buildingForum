@@ -1,8 +1,10 @@
 @extends('layouts.front')
 @section('heading','Thread')
-@section('extraInfo','history comes here')
+@section('extraInfo')
+@include('thread.partials.legend')
+@endsection
 @section('content')
-<div class="card border-light bg-light">
+<div class="card border-light bg-secondary text-white">
     <div class="card-body">
         @include('layouts.partials.success')
         <div class="row">
@@ -11,19 +13,19 @@
         </div>
         <hr>
         <div class="row">
-            <div class="thread-details col-md-10">
+            <div class="thread-details col-md-12">
                 {!!$thread->thread!!}
             </div>
             <br>
             @if(auth()->user()->id == $thread->user_id)
-            <div class="col-md-2">
-                <div class="actions  float-right">
-                    <a href="{{route('threads.edit',$thread->id)}}" class="btn btn-xs btn-info btn-xs"><i class="fas fa-xs fa-pen"></i></a>
+            <div class="col-md-3 mt-3">
+                <div class="actions">
+                    <a href="{{route('threads.edit',$thread->id)}}" class="btn btn-xs btn-info btn-xs fas fa-xs fa-pen"></a>
                     {{--//delete form--}}
                     <form action="{{route('threads.destroy',$thread->id)}}" method="POST" class="inline-it">
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
-                        <button class="btn btn-xs btn-danger" type="submit"><i class="fas fa-xs fa-trash"></i></button>
+                        <button class="btn btn-xs btn-danger fas fa-xs fa-trash" type="submit"></button>
                     </form>
                 </div>
             </div>
@@ -38,23 +40,26 @@
     <div class="card border-light bg-light mt-3" >
         <div class="card-body">
             <div class="row">
-                <div class="col-md-9">
-                    <p class="lead">
-                        @if(!empty($thread->solution))
-                        @if($thread->solution == $comment->id)
-                        <a class="btn btn-success btn-xs fas fa-xs fa-check" data-toggle="tooltip" data-placement="top" title="Marked as solution"></a>
-                        @endif
-                        @else
-                        {{-- @can('update',$thread) --}}
-                        <a class="btn btn-default btn-xs fas fa-xs fa-check toMark" onclick="markAsSolution('{{$thread->id}}','{{$comment->id}}',this)" data-toggle="tooltip" data-placement="top" title="Mark as solution"></a>
-                        {{-- @endcan --}}
-                        @endif
+                <div class="col-md-12">
+                    <p class="">
                         {{$comment->body}}
                     </p>
                 </div>
                 <div class="col-md-3">
-                    @if(Auth::user()->id === $comment->user_id)
-                    <div class="actions float-right">
+                    <hr>
+                    <span class="font-weight-light">{{$comment->user->name}}</span>
+                    <div class="actions">
+                        @if(!empty($thread->solution))
+                            @if($thread->solution == $comment->id)
+                            <a class="btn btn-success btn-xs fas fa-xs fa-check"  href="#" data-toggle="tooltip" data-placement="top" title="Marked as solution"></a>
+                            @endif
+                        @else
+                        {{-- @can('update',$thread) --}}
+                        <a class="btn btn-default btn-xs fas fa-xs fa-check toMark" href="#" onclick="markAsSolution('{{$thread->id}}','{{$comment->id}}',this)" data-toggle="tooltip" data-placement="top" title="Mark as solution"></a>
+                        {{-- @endcan --}}
+                        @endif
+                        @if(Auth::user()->id === $comment->user_id)
+
                         <a class="btn btn-info btn-xs fas fa-xs fa-pen" data-toggle="modal" href="#{{$comment->id}}" data-target="#comment{{$comment->id}}"></a>
                         {{--//delete form--}}
                         <form action="{{route('comments.destroy',$comment->id)}}" method="POST" class="inline-it">
@@ -62,10 +67,11 @@
                             {{method_field('DELETE')}}
                             <button class="btn btn-xs btn-danger fas fa-xs fa-trash" type="submit"></button>
                         </form>
+                        @else
+                        <button class="btn btn-secondary btn-xs fas fa-xs fa-arrow-up" onclick="likeIt({{$comment->id}},this)" data-toggle="tooltip" data-placement="top" title="like"></button>
+                        {{-- {{$comment->isLiked()?"liked":""}} --}}
+                        @endif
                     </div>
-                    @else
-                    <span class="font-weight-light float-right">{{$comment->user->name}}</span>
-                    @endif
                 </div>
             </div>
         </div>
@@ -74,16 +80,18 @@
     {{-- reply to comment --}}
     @if($comment->comments !== null)
     @foreach($comment->comments as $reply)
-    <div class="card border-light bg-light mt-3" style="margin-left: 40px">
-        <div class="card-body">
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <div class="row pt-3">
+    <div class="card border-light bg-light mt-1" style="margin-left: 40px">
+    <div class="bg-light">
+            {{-- <div class="row "> --}}
+                {{-- <div class="col-md-12 "> --}}
+                    <div class="row p-3">
                         <div class="col-md-9">
                             <p>{{$reply->body}}</p>
                         </div>
                         <div class="col-md-3">
+                            <span class="font-weight-light float-right">{{$reply->user->name}}</span>
                             @if(Auth::user()->id === $reply->user_id)
+                            <br>
                             <div class="actions float-right">
                                 <a class="btn btn-info btn-xs fas fa-xs fa-pen" data-toggle="modal" href="#{{$reply->id}}" data-target="#reply{{$reply->id}}"></a>
                                 {{--//delete form--}}
@@ -93,13 +101,11 @@
                                     <button class="btn btn-xs btn-danger fas fa-xs fa-trash" type="submit"></button>
                                 </form>
                             </div>
-                            @else
-                            <span class="font-weight-light float-right">{{$reply->user->name}}</span>
                             @endif
                         </div>
                     </div>
-                </div>
-            </div>
+                {{-- </div> --}}
+            {{-- </div> --}}
         </div>
     </div>
     @include('thread.partials.reply-edit-model')
@@ -141,7 +147,6 @@
 function markAsSolution(threadId, solutionId,elem) {
 var csrfToken='{{csrf_token()}}';
 $.post('{{route('markAsSolution')}}', {solutionId: solutionId, threadId: threadId,_token:csrfToken}, function (data) {
-console.log(data);
 $(elem).removeClass();
 $(elem).addClass("btn btn-success btn-xs fas fa-xs fa-check")
 $('.toMark').remove();
@@ -160,5 +165,28 @@ $(this).addClass('d-none');
 $(function () {
 $('[data-toggle="tooltip"]').tooltip()
 })
+</script>
+
+<script>
+function likeIt(commentId, elem) {
+    console.log(elem);
+var csrfToken='{{csrf_token()}}';
+$.post('{{route('toggleLike')}}', {commentId: commentId,_token:csrfToken}, function (data) {
+    console.log(data);
+     if(data.message==='Liked'){
+                        var classes = $(elem).attr('class');
+                    classes = 'liked' +' ' +classes;
+                    $(elem).attr('class', classes);
+                   // $(elem).addClass('liked');
+                   // console.log(elem)
+                   // $('#'+commentId+"-count").text(likesCount+1);
+               }else{
+                   console.log("unliked");
+
+                   // $('#'+commentId+"-count").text(likesCount-1);
+                   $(elem).removeClass('liked');
+               }
+            });
+}
 </script>
 @endsection
