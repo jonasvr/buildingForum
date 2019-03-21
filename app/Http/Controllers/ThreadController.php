@@ -83,9 +83,7 @@ class ThreadController extends Controller
      */
     public function edit(Thread $thread)
     {
-        if (auth()->user()->id !== $thread->user_id) {
-            abort(401, "unauthorized");
-        }
+        $this->authorize('update', $thread);
 
         return view('thread.edit', compact('thread'));
     }
@@ -99,9 +97,7 @@ class ThreadController extends Controller
      */
     public function update(Request $request, Thread $thread)
     {
-        if (auth()->user()->id !== $thread->user_id) {
-            abort(401, "unauthorized");
-        }
+        $this->authorize('update', $thread);
 
         //valdidate
         $this->validate($request, [
@@ -125,10 +121,7 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-
-        if (auth()->user()->id !== $thread->user_id) {
-            abort(401, "unauthorized");
-        }
+        $this->authorize('update', $thread);
 
         $thread->delete();
 
@@ -144,6 +137,9 @@ class ThreadController extends Controller
         $solutionId = Input::get('solutionId');
         $threadId = Input::get('threadId');
         $thread = Thread::find($threadId);
+
+        $this->authorize('update', $thread);
+
         $thread->solution = $solutionId;
         if ($thread->save()) {
             if (request()->ajax()) {

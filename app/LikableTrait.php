@@ -20,11 +20,14 @@ trait LikableTrait
         return $like;
     }
 
-    public function unLikeIt($id)
+    public function unLikeIt()
     {
-        $like = Like::find($id);
-        $like->delete();
+        $this->likes()->where('user_id', auth()->id())->delete();
 
-        return true;
+    }
+
+    public function isLiked()
+    {
+        return !!$this->likes()->where('user_id', auth()->id())->count();
     }
 }
