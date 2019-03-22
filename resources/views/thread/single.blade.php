@@ -5,8 +5,8 @@
 @include('thread.partials.legend')
 @endsection
 @section('content')
+@include('layouts.partials.success')
 <div class="card border-light ">
-    @include('layouts.partials.success')
     <div class="card-header bg-info text-white">
         <div class="row">
             <div class="h4 col-md-6">{{$thread->subject}}</div>
@@ -18,29 +18,28 @@
         </div>
     </div>
     <div class="card-body">
-    <div class="row">
-        <div class="thread-details col-md-12">
-           <p>{{str_limit($thread->thread,100) }}
-                    </p>
-
-        </div>
-        <div class="col-md-12 mt-3 text-sm">
-            <hr>
-                    Posted by <a href="{{route('user_profile',$thread->user->name)}}">{{$thread->user->name}}</a> {{$thread->created_at->diffForHumans()}}
-        @can('update',$thread)
-        <br>
-            <div class="actions">
-                <a href="{{route('threads.edit',$thread->id)}}" class="btn btn-xs btn-info btn-xs fas fa-xs fa-pen"></a>
-                {{--//delete form--}}
-                <form action="{{route('threads.destroy',$thread->id)}}" method="POST" class="inline-it">
-                    {{csrf_field()}}
-                    {{method_field('DELETE')}}
-                    <button class="btn btn-xs btn-danger fas fa-xs fa-trash" type="submit"></button>
-                </form>
+        <div class="row">
+            <div class="thread-details col-md-12">
+                <p>{{str_limit($thread->thread,100) }}
+                </p>
             </div>
-        @endcan
+            <div class="col-md-12 mt-3 text-sm">
+                <hr>
+                Posted by <a href="{{route('user_profile',$thread->user->name)}}">{{$thread->user->name}}</a> {{$thread->created_at->diffForHumans()}}
+                @can('update',$thread)
+                <br>
+                <div class="actions">
+                    <a href="{{route('threads.edit',$thread->id)}}" class="btn btn-xs btn-info btn-xs fas fa-xs fa-pen"></a>
+                    {{--//delete form--}}
+                    <form action="{{route('threads.destroy',$thread->id)}}" method="POST" class="inline-it">
+                        {{csrf_field()}}
+                        {{method_field('DELETE')}}
+                        <button class="btn btn-xs btn-danger fas fa-xs fa-trash" type="submit"></button>
+                    </form>
+                </div>
+                @endcan
+            </div>
         </div>
-    </div>
     </div>
 </div>
 {{-- Awnser/comment --}}

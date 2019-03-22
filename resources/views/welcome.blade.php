@@ -12,6 +12,9 @@
 </div>
 @endguest
 @endsection
+@section('extraInfo')
+@include('thread.partials.threadTopicList')
+@endsection
 @section('heading','Threads')
 @section('content')
 <div class="card bg-light">

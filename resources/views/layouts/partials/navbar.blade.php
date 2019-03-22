@@ -28,9 +28,21 @@
                 </li>
                 @endif
                 @else
+                <li class="nav-item dropdown" onclick="markNotificationsAsRead({{auth()->user()->unreadNotifications()->count()}})">
+                    <a id="navbarDropdown" id="markAsRead"class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <span class="badge badge-pill badge-light">{{auth()->user()->unreadNotifications()->count()}}</span>  Notifications  <span class="fas fa-globe"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        @forelse(auth()->user()->unreadNotifications as $notification)
+                        @include('thread.partials.notification.'.snake_case(class_basename($notification->type)))
+                        @empty
+                        <span class="dropdown-item">No notifications</span>
+                        @endforelse
+                    </div>
+                </li>
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
+                    <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }} <span class="caret"><i class="fas fa-user"></i></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}"
@@ -42,9 +54,8 @@
                             @csrf
                         </form>
                         <a class="dropdown-item" href="{{ route('user_profile',auth()->user()) }}">
-                                    My Profile
-                                </a>
-
+                            My Profile
+                        </a>
                     </div>
                 </li>
                 @endguest

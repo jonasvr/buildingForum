@@ -18,9 +18,12 @@
 
     @forelse($threads as $thread)
 
-        <h5>{{$thread->subject}}</h5>
-        <a href="{{route('threads.show',$thread->id)}}" class="">
+        <div class="h5">
+            {{$thread->subject}} -
+            <a href="{{route('threads.show',$thread->id)}}" class="">
         <span class="">{{$thread->comments()->count()}} Comments</span>
+        </div>
+
         <hr>
     </a>
 

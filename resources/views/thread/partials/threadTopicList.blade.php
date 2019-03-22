@@ -1,9 +1,9 @@
 <div class="page-header">
-	<h4>Category</h4>
+	<h4>Tags</h4>
 </div>
 <ul class="list-group">
 	<a href="{{'route(threads.index'}}" class="list-group-item">
-		<span class="badge badge-secondary float-right">14</span>
+		<span class="badge badge-secondary float-right">1344</span>
 		All Threads
 	</a>
 	<a href="#" class="list-group-item">

@@ -1,13 +1,9 @@
-<div class="card-body">
-    @include('layouts.partials.success')
-    @auth
-	<a href="{{route('threads.create')}}" class="btn btn-primary mb-2 col-md-1"> <i class="fas fa-plus"></i></a>
-	@endauth
+@include('layouts.partials.success')
 @forelse($threads as $thread)
 
-	<div class="card mt-2">
+	<div class="card mb-2">
             <div class="card-header bg-info">
-                <h3 class="card-title text-white"><a class="text-light" href="{{route('threads.show',$thread->id)}}"> {{$thread->subject}}</a></h3>
+                <h3 class=" card-title "><a class="text-white" href="{{route('threads.show',$thread->id)}}"> {{$thread->subject}}</a></h3>
             </div>
             <div class="card-body">
                 <p>{{str_limit($thread->thread,100) }}
@@ -25,4 +21,3 @@
 @empty
 	<h5>No threads</h5>
 @endforelse
-</div>
