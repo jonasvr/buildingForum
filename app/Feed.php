@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Feed extends Model
 {
     protected $guarded = [];
 
-    public function threads()
+    public function feedable()
     {
-        return $this->belongsToMany(Thread::class);
+        $this->morphTo();
     }
 }

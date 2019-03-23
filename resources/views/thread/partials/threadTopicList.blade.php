@@ -2,20 +2,14 @@
 	<h4>Tags</h4>
 </div>
 <ul class="list-group">
-	<a href="{{'route(threads.index'}}" class="list-group-item">
-		<span class="badge badge-secondary float-right">1344</span>
+	<a href="{{route('threads.index')}}" class="list-group-item">
+		<span class="badge badge-secondary float-right">{{App\Thread::count()}}</span>
 		All Threads
 	</a>
-	<a href="#" class="list-group-item">
-		<span class="badge badge-secondary float-right">4</span>
-		Python
+	@foreach($tags as $tag)
+	<a href="{{route('threads.index',['tags'=>$tag->id])}}" class="list-group-item">
+		<span class="badge badge-secondary float-right">{{$tag->threads()->count()}}</span>
+		{{$tag->name}}
 	</a>
-	<a href="#" class="list-group-item">
-		<span class="badge badge-secondary float-right">5</span>
-		PHP
-	</a>
-	<a href="#" class="list-group-item">
-		<span class="badge badge-secondary float-right">4</span>
-		Ruby
-	</a>
+	@endforeach
 </ul>

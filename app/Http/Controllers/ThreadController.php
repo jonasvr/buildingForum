@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -20,9 +21,17 @@ class ThreadController extends Controller
      *
      * @return [type] [description]
      */
-    public function index()
+    public function index(Request $request)
     {
-        $threads = Thread::paginate(15);
+
+        // if ($request->has('tags')) {
+        //     $tag = Tag::find($request->tags);
+        //     $threads = $tag->threads()->paginate(3);
+
+        // } else {
+        //     $threads = Thread::paginate(3);
+        // }
+        $threads = Thread::paginate(3);
 
         return view("thread.index", compact('threads'));
     }
@@ -46,17 +55,29 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+        //
+        $tags = $request->tags;
+        foreach ($tags as $key => $tag) {
+            if (!is_numeric($tag)) {
+                $tags[$key] = Tag::create(['name' => $tag])->id;
+            } else {
+                if (Tag::where('name', '=', $tag)->count() < 1) {
+                    $tags[$key] = Tag::create(['name' => $tag])->id;
+                }
+            }
+        }
         //valdidate
         $this->validate($request, [
             'subject' => 'required|min:5',
-            'type' => 'required',
+            'tags' => 'required',
             'thread' => 'required|min:10',
 //            'g-recaptcha-response' => 'required|captcha'
         ]);
 
         //store
-        auth()->user()->threads()->create($request->all());
-
+        $thread = auth()->user()->threads()->create($request->all());
+        $thread->tags()->attach($tags);
         // $thread->tags()->attach($request->tags);
 
         //redirect
@@ -125,7 +146,7 @@ class ThreadController extends Controller
 
         $thread->delete();
 
-        return redirect()->route('thread.index')->withMessage('Thread Deleted');
+        return redirect()->route('threads.index')->withMessage('Thread Deleted');
     }
 
     /**
