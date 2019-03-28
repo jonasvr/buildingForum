@@ -1,5 +1,6 @@
 @extends('layouts.front')
 @section('content')
+<div class="offset-2 col-md-8">
 <div class="card bg-light">
     <div class="card-header">{{ __('Login') }}</div>
     <div class="card-body">
@@ -52,4 +53,5 @@
         </form>
     </div>
 </div>
+ </div>
 @endsection

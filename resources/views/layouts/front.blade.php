@@ -14,14 +14,16 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
+					<div class="h2">@yield('page-title')</div>
+				</div>
+			</div>
+			<div class="row">
+				{{-- <div class="col-md-3"> --}}
 					@yield('extraInfo')
-				</div>
-				<div class="col-md-9">
-					<div class="page-header">
-						<h4>@yield('heading')</h4>
-					</div>
+				{{-- </div> --}}
+				{{-- <div class="col-md-9"> --}}
 					@yield('content')
-				</div>
+				{{-- </div> --}}
 			</div>
 		</div>
 		<script

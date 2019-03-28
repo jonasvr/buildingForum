@@ -1,9 +1,12 @@
 @extends('layouts.front')
-@section('heading',"Create Thread")
-@section('extraInfo')
-@include('thread.partials.threadTopicList')
-@endsection
+@section('page-title',"Create Thread")
+{{-- @section('extraInfo')
+<div class="col-md-3">
+    @include('thread.partials.threadTopicList')
+</div>
+@endsection --}}
 @section('content')
+<div class="offset-1 col-md-10">
 <div class="card bg-light">
     <div class="card-body">
         @include('layouts.partials.error')
@@ -29,6 +32,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+</div>
 </div>
 @endsection
 @section('js')

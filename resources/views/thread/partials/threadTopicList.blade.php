@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="comment-page-header">
 	<h4>Tags</h4>
 </div>
 <ul class="list-group">

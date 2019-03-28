@@ -1,16 +1,12 @@
 @extends('layouts.front')
+@section('page-title','Threads')
 @section('extraInfo')
+<div class="col-md-3">
 @include('thread.partials.threadTopicList')
-@endsection
-@section('heading')
-Threads
-@auth
-	<a href="{{route('threads.create')}}" class="text-info"> <i class="fas fa-plus fa-xs"></i></a>
-	@endauth
+</div>
 @endsection
 @section('content')
-<div class="card border-0">
+<div class="col-md-9">
 	@include('thread.partials.thread-list')
 </div>
-{!! $threads->links() !!}
 @endsection

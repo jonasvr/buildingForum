@@ -20,7 +20,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/thread/mark-as-solution', 'ThreadController@markAsSolution')->name('markAsSolution');
+Route::get('/threads/search', 'ThreadController@search')->name('threads.search');
+Route::post('/threads/mark-as-solution', 'ThreadController@markAsSolution')->name('markAsSolution');
 Route::resource('/threads', 'ThreadController');
 
 Route::resource('/comments', 'CommentController', ['only' => ['update', 'destroy']]);

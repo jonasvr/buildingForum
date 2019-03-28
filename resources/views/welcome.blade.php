@@ -12,12 +12,12 @@
 </div>
 @endguest
 @endsection
-@section('extraInfo')
-@include('thread.partials.threadTopicList')
-@endsection
-@section('heading','Threads')
+@section('page-title','home')
 @section('content')
-<div class="card bg-light">
-	@include('thread.partials.thread-list')
+	<div class="col-md-6">
+	@include('layouts.partials.profile-button')
+</div>
+<div class="col-md-6">
+	@include('layouts.partials.threads-button')
 </div>
 @endsection

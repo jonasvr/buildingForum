@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use App\Thread;
+use App\ThreadFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -21,19 +22,11 @@ class ThreadController extends Controller
      *
      * @return [type] [description]
      */
-    public function index(Request $request)
+    public function index(ThreadFilters $filters)
     {
 
-        // if ($request->has('tags')) {
-        //     $tag = Tag::find($request->tags);
-        //     $threads = $tag->threads()->paginate(3);
-
-        // } else {
-        //     $threads = Thread::paginate(3);
-        // }
-        $threads = Thread::paginate(3);
-
-        return view("thread.index", compact('threads'));
+        $threads = Thread::filter($filters)->paginate(10);
+        return view('thread.index', compact('threads'));
     }
 
     /**
@@ -67,7 +60,7 @@ class ThreadController extends Controller
                 }
             }
         }
-        //valdidate
+
         $this->validate($request, [
             'subject' => 'required|min:5',
             'tags' => 'required',
@@ -168,5 +161,28 @@ class ThreadController extends Controller
             }
             return back()->withMessage('Marked as solution');
         }
+    }
+
+    public function search()
+    {
+        $search = request('query');
+
+        $threads = Thread::with('tags')
+            ->where('subject', 'Like', '%' . $search . '%')
+            ->orWhereHas('tags', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->paginate(10);
+
+        // dd($threads);
+
+        // $threads = $threads->tags()->where('tag.name', $search)->get();
+        // ->join('')
+        // ->where('tags.name', 'LIKE', $query)
+        // ->orWhere('subject', 'LIKE', $query)
+        // ->get();
+
+        return view('thread.index', compact('threads'));
+
     }
 }
