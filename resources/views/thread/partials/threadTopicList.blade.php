@@ -7,9 +7,11 @@
 		All Threads
 	</a>
 	@foreach($tags as $tag)
+	@if($tag->threads()->count())
 	<a href="{{route('threads.index',['tags'=>$tag->id])}}" class="list-group-item">
 		<span class="badge badge-secondary float-right">{{$tag->threads()->count()}}</span>
 		{{$tag->name}}
 	</a>
+	@endif
 	@endforeach
 </ul>

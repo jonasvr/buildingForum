@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNameToTags extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddNameToTags extends Migration
      */
     public function up()
     {
-        Schema::table('tags', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name');
+            $table->string('description');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddNameToTags extends Migration
      */
     public function down()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            $this->dropColumn('name');
-        });
+        Schema::dropIfExists('roles');
     }
 }

@@ -13,7 +13,7 @@
 		@yield('banner')
 		<div class="container">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-3 mt-2">
 					<div class="h2">@yield('page-title')</div>
 				</div>
 			</div>

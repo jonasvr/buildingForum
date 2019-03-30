@@ -2,6 +2,8 @@
 @section('page-title','Threads')
 @section('extraInfo')
 <div class="col-md-3">
+@include('thread.partials.functions.create-button')
+@include('thread.partials.functions.search-input')
 @include('thread.partials.threadTopicList')
 </div>
 @endsection

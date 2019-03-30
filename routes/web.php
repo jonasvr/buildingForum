@@ -27,10 +27,12 @@ Route::resource('/threads', 'ThreadController');
 Route::resource('/comments', 'CommentController', ['only' => ['update', 'destroy']]);
 Route::post('comments/create/{thread}', 'CommentController@addThreadComment')->name('threadcomment.store');
 Route::post('replies/create/{comment}', 'CommentController@addReplyComment')->name('replycomment.store');
-Route::post('comment/like', 'LikeController@toggleLike')->name('toggleLike');
+Route::post('comments/like', 'LikeController@toggleLike')->name('toggleLike');
 
 Route::get('/user/profile/{user}', 'UserProfileController@index')->name('user_profile')->middleware('auth');
 
 Route::get('/markAsRead', function () {
     auth()->user()->unreadNotifications->markAsRead();
 });
+
+Route::resource('/admin', 'AdminController');

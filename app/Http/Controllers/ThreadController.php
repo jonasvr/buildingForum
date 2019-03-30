@@ -69,8 +69,7 @@ class ThreadController extends Controller
         ]);
 
         //store
-        $thread = auth()->user()->threads()->create($request->all());
-        $thread->tags()->attach($tags);
+        $thread = auth()->user()->threads()->create($request->all())->tags()->attach($tags);
         // $thread->tags()->attach($request->tags);
 
         //redirect
